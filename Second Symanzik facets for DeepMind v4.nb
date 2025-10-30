@@ -1,0 +1,838 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     34535,        830]
+NotebookOptionsPosition[     34174,        816]
+NotebookOutlinePosition[     34575,        832]
+CellTagsIndexPosition[     34532,        829]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "==="}], "="}], "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{"Helper", ":", 
+    RowBox[{"rename", " ", "multiple", " ", "vertices", " ", "safely"}]}], 
+   "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "RenameMultipleVerticesWithMap", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"RenameMultipleVerticesWithMap", "[", 
+      RowBox[{"g_Graph", ",", "vertices_List"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"edges", "=", 
+          RowBox[{"EdgeList", "[", "g", "]"}]}], ",", 
+         RowBox[{"mapping", "=", 
+          RowBox[{"<|", "|>"}]}], ",", "newEdges"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"newEdges", "=", 
+         RowBox[{"edges", "/.", " ", 
+          RowBox[{
+           RowBox[{"UndirectedEdge", "[", 
+            RowBox[{"a_", ",", "b_"}], "]"}], ":>", 
+           RowBox[{"UndirectedEdge", "[", 
+            RowBox[{
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"MemberQ", "[", 
+                RowBox[{"vertices", ",", "a"}], "]"}], ",", 
+               RowBox[{"With", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"new", "=", 
+                   RowBox[{"Unique", "[", "\"\<vsub\>\"", "]"}]}], "}"}], ",", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"mapping", "[", "new", "]"}], "=", "a"}], ";", 
+                  "new"}]}], "]"}], ",", "a"}], "]"}], ",", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"MemberQ", "[", 
+                RowBox[{"vertices", ",", "b"}], "]"}], ",", 
+               RowBox[{"With", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"new", "=", 
+                   RowBox[{"Unique", "[", "\"\<vsub\>\"", "]"}]}], "}"}], ",", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"mapping", "[", "new", "]"}], "=", "b"}], ";", 
+                  "new"}]}], "]"}], ",", "b"}], "]"}]}], "]"}]}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Graph", "[", "newEdges", "]"}], ",", "mapping"}], 
+         "}"}]}]}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Check", " ", "1"}], "-", 
+     RowBox[{"vertex", " ", "irreducibility"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ClearAll", "[", "Is1VertexIrreducibleCustom", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Is1VertexIrreducibleCustom", "[", "g_Graph", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"vertices", "=", 
+          RowBox[{"VertexList", "[", "g", "]"}]}], ",", 
+         RowBox[{"disconnectedQ", "=", "False"}]}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{"Module", "[", 
+           RowBox[{
+            RowBox[{"{", "gModified", "}"}], ",", 
+            RowBox[{
+             RowBox[{"gModified", "=", 
+              RowBox[{
+               RowBox[{"RenameMultipleVerticesWithMap", "[", 
+                RowBox[{"g", ",", 
+                 RowBox[{"{", "v", "}"}]}], "]"}], "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"!", 
+                RowBox[{"ConnectedGraphQ", "[", "gModified", "]"}]}], ",", 
+               RowBox[{
+                RowBox[{"disconnectedQ", "=", "True"}], ";", 
+                RowBox[{"Break", "[", "]"}], ";"}]}], "]"}], ";"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"v", ",", "vertices"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Not", "[", "disconnectedQ", "]"}], "&&", 
+         RowBox[{"ConnectedGraphQ", "[", "g", "]"}]}]}]}], "]"}]}], ";"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Articulation", " ", "points"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ClearAll", "[", "FindArticulationPointsCustom", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FindArticulationPointsCustom", "[", "g_Graph", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"vertices", "=", 
+          RowBox[{"VertexList", "[", "g", "]"}]}], ",", 
+         "originalComponentCount", ",", 
+         RowBox[{"articulationPoints", "=", 
+          RowBox[{"{", "}"}]}]}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"originalComponentCount", "=", 
+         RowBox[{"Length", "[", 
+          RowBox[{"ConnectedComponents", "[", "g", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{"Module", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+             "gModified", ",", "vertexMap", ",", "newComponentCount"}], "}"}],
+             ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"gModified", ",", "vertexMap"}], "}"}], "=", 
+              RowBox[{"RenameMultipleVerticesWithMap", "[", 
+               RowBox[{"g", ",", 
+                RowBox[{"{", "v", "}"}]}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"newComponentCount", "=", 
+              RowBox[{"Length", "[", 
+               RowBox[{"ConnectedComponents", "[", "gModified", "]"}], 
+               "]"}]}], ";", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"newComponentCount", ">", "originalComponentCount"}], ",", 
+               RowBox[{
+                RowBox[{"AppendTo", "[", 
+                 RowBox[{"articulationPoints", ",", "v"}], "]"}], ";"}]}], 
+              "]"}], ";"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"v", ",", "vertices"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", "articulationPoints"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Quotient", " ", "graph", " ", "with", " ", "edge"}], "-", 
+     RowBox[{"position", " ", "tracking"}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "ClearAll", "[", "QuotientGraphByEdgeContractionWithEdgePos", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"QuotientGraphByEdgeContractionWithEdgePos", "[", 
+      RowBox[{
+      "graph_Graph", ",", "edgesToContract_List", ",", "edgePositions_List", ",", 
+       RowBox[{"opts", ":", 
+        RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"vlist", ",", "elist", ",", 
+         RowBox[{"edgePosList", "=", "edgePositions"}], ",", "edgeSubgraph", ",",
+          "components", ",", "repName", ",", "newEdges", ",", "newVertices", ",",
+          "edgeMap", ",", "remainingEdges", ",", "remainingEdgePositions", ",",
+          "edgesToContract2"}], "}"}], ",", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"-", "Step"}]}], " ", "1"}], ":", 
+         RowBox[{
+          RowBox[{"Normalize", " ", "all", " ", "undirected", " ", 
+           RowBox[{"edges", "--"}]}], "-"}]}], "*)"}], 
+       RowBox[{
+        RowBox[{"elist", "=", 
+         RowBox[{"UndirectedEdge", "@@@", 
+          RowBox[{"(", 
+           RowBox[{"Sort", "/@", 
+            RowBox[{"List", "@@@", 
+             RowBox[{"EdgeList", "[", "graph", "]"}]}]}], ")"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"vlist", "=", 
+         RowBox[{"VertexList", "[", "graph", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"edgesToContract2", "=", 
+         RowBox[{"UndirectedEdge", "@@@", 
+          RowBox[{"(", 
+           RowBox[{"Sort", "/@", 
+            RowBox[{"List", "@@@", "edgesToContract"}]}], ")"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"--", 
+            RowBox[{"-", "Step"}]}], " ", "2"}], ":", 
+          RowBox[{
+           RowBox[{
+           "Find", " ", "connected", " ", "clusters", " ", "to", " ", "be", " ", 
+            RowBox[{"merged", "--"}]}], "-"}]}], "*)"}], 
+        RowBox[{"edgeSubgraph", "=", 
+         RowBox[{"Graph", "[", "edgesToContract2", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"components", "=", 
+         RowBox[{"ConnectedComponents", "[", "edgeSubgraph", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"repName", "=", 
+         RowBox[{"Association", "[", 
+          RowBox[{"Flatten", "[", 
+           RowBox[{"Map", "[", 
+            RowBox[{
+             RowBox[{"Function", "[", 
+              RowBox[{"component", ",", 
+               RowBox[{"Thread", "[", 
+                RowBox[{"component", "->", 
+                 RowBox[{"Unique", "[", "\"\<merged\>\"", "]"}]}], "]"}]}], 
+              "]"}], ",", "components"}], "]"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Any", " ", "vertex", " ", "not", " ", "contracted", " ", "keeps", " ",
+           "its", " ", "own", " ", "name"}], "*)"}], 
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"!", 
+             RowBox[{"KeyExistsQ", "[", 
+              RowBox[{"repName", ",", "v"}], "]"}]}], ",", 
+            RowBox[{
+             RowBox[{"repName", "[", "v", "]"}], "=", "v"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"v", ",", "vlist"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"--", 
+            RowBox[{"-", "Step"}]}], " ", "3"}], ":", 
+          RowBox[{
+           RowBox[{"Build", " ", "edge"}], "-", "to", "-", 
+           RowBox[{"position", " ", "map", " ", "before", " ", 
+            RowBox[{"renaming", "--"}]}], "-"}]}], "*)"}], 
+        RowBox[{"edgeMap", "=", 
+         RowBox[{"Association", "[", 
+          RowBox[{"Thread", "[", 
+           RowBox[{"elist", "->", "edgePosList"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"--", 
+               RowBox[{"-", "Step"}]}], " ", "4"}], ":", 
+             RowBox[{"Determine", " ", "remaining", " ", "edges"}]}], "&"}], " ",
+            "lookup", " ", "positions", " ", "BEFORE", " ", 
+           RowBox[{"renaming", "--"}]}], "-"}], "*)"}], 
+        RowBox[{"remainingEdges", "=", 
+         RowBox[{"Fold", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"DeleteCases", "[", 
+             RowBox[{"#1", ",", "#2", ",", "1", ",", "1"}], "]"}], "&"}], ",",
+            "elist", ",", "edgesToContract2"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"remainingEdgePositions", "=", 
+         RowBox[{"Lookup", "[", 
+          RowBox[{"edgeMap", ",", "remainingEdges", ",", 
+           RowBox[{"Missing", "[", "\"\<NotFound\>\"", "]"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"--", 
+            RowBox[{"-", "Step"}]}], " ", "5"}], ":", 
+          RowBox[{
+           RowBox[{"Apply", " ", "vertex", " ", "renaming", " ", "AFTER", " ", 
+            RowBox[{"lookup", "--"}]}], "-"}]}], "*)"}], 
+        RowBox[{"newEdges", "=", 
+         RowBox[{"UndirectedEdge", "@@@", 
+          RowBox[{"(", 
+           RowBox[{"Sort", "/@", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Replace", "[", 
+                RowBox[{"#", ",", "repName", ",", 
+                 RowBox[{"{", "1", "}"}]}], "]"}], "&"}], "/@", 
+              RowBox[{"List", "@@@", "remainingEdges"}]}], ")"}]}], ")"}]}]}],
+         ";", "\[IndentingNewLine]", 
+        RowBox[{"newVertices", "=", 
+         RowBox[{"Union", "[", 
+          RowBox[{"Values", "[", "repName", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"<|", 
+         RowBox[{
+          RowBox[{"\"\<Graph\>\"", "->", 
+           RowBox[{"Graph", "[", 
+            RowBox[{"newVertices", ",", "newEdges", ",", "opts"}], "]"}]}], ",", 
+          RowBox[{"\"\<EdgePos\>\"", "->", "remainingEdgePositions"}], ",", 
+          RowBox[{"\"\<VertexMap\>\"", "->", "repName"}]}], "|>"}]}]}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Decompose", " ", "1", "VI", " ", "with", " ", "edge"}], "-", 
+     RowBox[{"position", " ", "tracking"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ClearAll", "[", "DecomposeInto1VIComponentsCustom", "]"}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"DecomposeInto1VIComponentsCustom", "[", 
+      RowBox[{"g_Graph", ",", "edgePositions_List"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"components", "=", 
+          RowBox[{"{", "}"}]}], ",", "workQueue", ",", 
+         "edgePositionsAvailable"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"workQueue", "=", 
+         RowBox[{"{", 
+          RowBox[{"<|", 
+           RowBox[{
+            RowBox[{"\"\<Graph\>\"", "->", "g"}], ",", 
+            RowBox[{"\"\<EdgePos\>\"", "->", "edgePositions"}]}], "|>"}], 
+          "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"edgePositionsAvailable", "=", 
+         RowBox[{"Thread", "[", 
+          RowBox[{
+           RowBox[{"EdgeList", "[", "g", "]"}], "->", "edgePositions"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "workQueue", "]"}], ">", "0"}], ",", 
+          RowBox[{"Module", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"current", "=", 
+               RowBox[{"First", "[", "workQueue", "]"}]}], ",", "gcur", ",", 
+              "edgePosCur"}], "}"}], ",", 
+            RowBox[{
+             RowBox[{"workQueue", "=", 
+              RowBox[{"Rest", "[", "workQueue", "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"gcur", "=", 
+              RowBox[{"current", "[", "\"\<Graph\>\"", "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"edgePosCur", "=", 
+              RowBox[{"current", "[", "\"\<EdgePos\>\"", "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"Is1VertexIrreducibleCustom", "[", "gcur", "]"}], ",", 
+               
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"components", ",", 
+                 RowBox[{"<|", 
+                  RowBox[{
+                   RowBox[{"\"\<Graph\>\"", "->", "gcur"}], ",", 
+                   RowBox[{"\"\<EdgePos\>\"", "->", "edgePosCur"}]}], 
+                  "|>"}]}], "]"}], ",", 
+               RowBox[{"Module", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                  "artPts", ",", "renamedGraph", ",", "vertexMap", ",", 
+                   "comps", ",", "subgraphs"}], "}"}], ",", 
+                 RowBox[{
+                  RowBox[{"artPts", "=", 
+                   RowBox[{
+                   "FindArticulationPointsCustom", "[", "gcur", "]"}]}], ";", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{"artPts", "===", 
+                    RowBox[{"{", "}"}]}], ",", 
+                    RowBox[{"AppendTo", "[", 
+                    RowBox[{"components", ",", 
+                    RowBox[{"<|", 
+                    RowBox[{
+                    RowBox[{"\"\<Graph\>\"", "->", "gcur"}], ",", 
+                    RowBox[{"\"\<EdgePos\>\"", "->", "edgePosCur"}]}], 
+                    "|>"}]}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"renamedGraph", ",", "vertexMap"}], "}"}], "=", 
+                    RowBox[{"RenameMultipleVerticesWithMap", "[", 
+                    RowBox[{"gcur", ",", "artPts"}], "]"}]}], ";", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"comps", "=", 
+                    RowBox[{
+                    "ConnectedComponents", "[", "renamedGraph", "]"}]}], ";", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"subgraphs", "=", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Subgraph", "[", 
+                    RowBox[{"renamedGraph", ",", "#"}], "]"}], "&"}], "/@", 
+                    "comps"}]}], ";", "\[IndentingNewLine]", 
+                    RowBox[{"subgraphs", "=", 
+                    RowBox[{"Map", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"VertexReplace", "[", 
+                    RowBox[{"#", ",", 
+                    RowBox[{"Normal", "[", "vertexMap", "]"}]}], "]"}], "&"}],
+                     ",", "subgraphs"}], "]"}]}], ";", "\[IndentingNewLine]", 
+                    
+                    RowBox[{"Do", "[", 
+                    RowBox[{
+                    RowBox[{"Module", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"comp", "=", 
+                    RowBox[{"subgraphs", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}]}], ",", "compEdges", ",", 
+                    RowBox[{"compEdgePos", "=", 
+                    RowBox[{"{", "}"}]}]}], "}"}], ",", 
+                    RowBox[{
+                    RowBox[{"compEdges", "=", 
+                    RowBox[{"Normal", "@", 
+                    RowBox[{"EdgeList", "[", "comp", "]"}]}]}], ";", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"Do", "[", 
+                    RowBox[{
+                    RowBox[{"Module", "[", 
+                    RowBox[{
+                    RowBox[{"{", "matchPos", "}"}], ",", 
+                    RowBox[{
+                    RowBox[{"matchPos", "=", 
+                    RowBox[{"SelectFirst", "[", 
+                    RowBox[{"edgePositionsAvailable", ",", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"First", "[", "#", "]"}], "===", "e"}], "&"}], ",", 
+                    RowBox[{"Missing", "[", "\"\<NotFound\>\"", "]"}]}], 
+                    "]"}]}], ";", "\[IndentingNewLine]", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"matchPos", "=!=", 
+                    RowBox[{"Missing", "[", "\"\<NotFound\>\"", "]"}]}], ",", 
+                    
+                    RowBox[{
+                    RowBox[{"AppendTo", "[", 
+                    RowBox[{"compEdgePos", ",", 
+                    RowBox[{"matchPos", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ";", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"edgePositionsAvailable", "=", 
+                    RowBox[{"DeleteCases", "[", 
+                    RowBox[{"edgePositionsAvailable", ",", "matchPos"}], 
+                    "]"}]}], ";"}]}], "]"}], ";"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"e", ",", "compEdges"}], "}"}]}], "]"}], ";", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"workQueue", "=", 
+                    RowBox[{"Append", "[", 
+                    RowBox[{"workQueue", ",", 
+                    RowBox[{"<|", 
+                    RowBox[{
+                    RowBox[{"\"\<Graph\>\"", "->", "comp"}], ",", 
+                    RowBox[{"\"\<EdgePos\>\"", "->", "compEdgePos"}]}], 
+                    "|>"}]}], "]"}]}], ";"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"i", ",", 
+                    RowBox[{"Length", "[", "subgraphs", "]"}]}], "}"}]}], 
+                    "]"}], ";"}]}], "]"}]}]}], "]"}]}], "]"}], ";"}]}], 
+           "]"}]}], "]"}], ";", "\[IndentingNewLine]", "components"}]}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Analyze", " ", "components"}], "\[LongDash]", 
+     RowBox[{
+     "works", " ", "for", " ", "original", " ", "or", " ", "quotient", " ", 
+      "graphs"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ClearAll", "[", "Analyze1VIComponents", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Analyze1VIComponents", "[", 
+      RowBox[{
+      "gInput_", ",", "testEdgePositions_List", ",", "testVertices_List"}], 
+      "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "g", ",", "edgePositions", ",", "components", ",", "results", ",", 
+         "edgePosAssoc"}], "}"}], ",", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Support", " ", "both", " ", "raw", " ", "Graph", " ", "and", " ", 
+         RowBox[{"{", 
+          RowBox[{"Graph", ",", "EdgePos"}], "}"}], " ", "association"}], 
+        "*)"}], 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"AssociationQ", "[", "gInput", "]"}], ",", 
+          RowBox[{
+           RowBox[{"g", "=", 
+            RowBox[{"gInput", "[", "\"\<Graph\>\"", "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"edgePositions", "=", 
+            RowBox[{"gInput", "[", "\"\<EdgePos\>\"", "]"}]}]}], ",", 
+          RowBox[{
+           RowBox[{"g", "=", "gInput"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"edgePositions", "=", 
+            RowBox[{"Range", "[", 
+             RowBox[{"Length", "[", 
+              RowBox[{"EdgeList", "[", "g", "]"}], "]"}], "]"}]}], ";"}]}], 
+         "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"components", "=", 
+         RowBox[{"DecomposeInto1VIComponentsCustom", "[", 
+          RowBox[{"g", ",", "edgePositions"}], "]"}]}], ";", 
+        RowBox[{"edgePosAssoc", "=", 
+         RowBox[{"AssociationThread", "[", 
+          RowBox[{
+           RowBox[{"EdgeList", "[", "g", "]"}], ",", "edgePositions"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"results", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"Module", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"comp", "=", 
+                RowBox[{
+                 RowBox[{"components", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}], "[", "\"\<Graph\>\"", 
+                 "]"}]}], ",", 
+               RowBox[{"compEdgePos", "=", 
+                RowBox[{
+                 RowBox[{"components", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}], "[", "\"\<EdgePos\>\"", "]"}
+                 ]}], ",", "containsTestEdge", ",", "gWithoutCompEdges", ",", 
+               "disconnectsTestVertices"}], "}"}], ",", 
+             RowBox[{
+              RowBox[{"containsTestEdge", "=", 
+               RowBox[{"AnyTrue", "[", 
+                RowBox[{"testEdgePositions", ",", 
+                 RowBox[{
+                  RowBox[{"MemberQ", "[", 
+                   RowBox[{"compEdgePos", ",", "#"}], "]"}], "&"}]}], "]"}]}],
+               ";", "\[IndentingNewLine]", 
+              RowBox[{"gWithoutCompEdges", "=", 
+               RowBox[{"Graph", "[", 
+                RowBox[{
+                 RowBox[{"VertexList", "[", "g", "]"}], ",", 
+                 RowBox[{"Select", "[", 
+                  RowBox[{
+                   RowBox[{"EdgeList", "[", "g", "]"}], ",", 
+                   RowBox[{
+                    RowBox[{"!", 
+                    RowBox[{"MemberQ", "[", 
+                    RowBox[{"compEdgePos", ",", 
+                    RowBox[{"edgePosAssoc", "[", "#", "]"}]}], "]"}]}], 
+                    "&"}]}], "]"}]}], "]"}]}], ";", "\n", "               ", 
+              RowBox[{"disconnectsTestVertices", "=", 
+               RowBox[{"!", 
+                RowBox[{"ConnectedGraphQ", "[", 
+                 RowBox[{"Subgraph", "[", 
+                  RowBox[{"gWithoutCompEdges", ",", "testVertices"}], "]"}], 
+                 "]"}]}]}], ";", "\[IndentingNewLine]", 
+              RowBox[{"<|", 
+               RowBox[{
+                RowBox[{"\"\<ComponentIndex\>\"", "->", "i"}], ",", 
+                
+                RowBox[{"\"\<ContainsTestEdge\>\"", "->", 
+                 "containsTestEdge"}], ",", 
+                
+                RowBox[{"\"\<DisconnectsTestVertices\>\"", "->", 
+                 "disconnectsTestVertices"}], ",", 
+                RowBox[{"\"\<EdgePositions\>\"", "->", "compEdgePos"}]}], 
+               "|>"}]}]}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{"Length", "[", "components", "]"}]}], "}"}]}], "]"}]}], ";",
+         "\[IndentingNewLine]", "results"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PredictMatrix", "[", 
+     RowBox[{"graph_", ",", "whereMass_", ",", "nParticles_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"nEdges", "=", 
+         RowBox[{"Length", "[", 
+          RowBox[{"EdgeList", "[", "graph", "]"}], "]"}]}], ",", "OneVIgamma",
+         ",", "OneVIGmodgamma", ",", "facets1", ",", "facets2", ",", 
+        "allsubgraphs"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"allsubgraphs", "=", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Association", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<Graph\>\"", "->", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+              RowBox[{"\"\<EdgePos\>\"", "->", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}], "]"}], "&"}], ",", 
+          
+          RowBox[{"Transpose", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Map", "[", 
+              RowBox[{"Graph", ",", 
+               RowBox[{"Drop", "[", 
+                RowBox[{
+                 RowBox[{"Drop", "[", 
+                  RowBox[{
+                   RowBox[{"Subsets", "[", 
+                    RowBox[{"EdgeList", "[", "graph", "]"}], "]"}], ",", 
+                   "1"}], "]"}], ",", 
+                 RowBox[{"-", "1"}]}], "]"}]}], "]"}], ",", 
+             RowBox[{"Drop", "[", 
+              RowBox[{
+               RowBox[{"Drop", "[", 
+                RowBox[{
+                 RowBox[{"Subsets", "[", 
+                  RowBox[{"Range", "[", "nEdges", "]"}], "]"}], ",", "1"}], 
+                "]"}], ",", 
+               RowBox[{"-", "1"}]}], "]"}]}], "}"}], "]"}]}], "]"}]}], ";", 
+       RowBox[{"OneVIgamma", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"allsubgraphs", ",", 
+          RowBox[{
+           RowBox[{"Is1VertexIrreducibleCustom", "[", 
+            RowBox[{"#", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "]"}], "&"}]}], "]"}]}], ";", 
+       RowBox[{"OneVIGmodgamma", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"allsubgraphs", ",", 
+          RowBox[{
+           RowBox[{"Is1VertexIrreducibleCustom", "[", 
+            RowBox[{
+             RowBox[{"QuotientGraphByEdgeContractionWithEdgePos", "[", 
+              RowBox[{"graph", ",", 
+               RowBox[{"EdgeList", "[", 
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], ",", 
+               RowBox[{"Range", "[", "nEdges", "]"}]}], "]"}], 
+             "[", "\"\<Graph\>\"", "]"}], "]"}], "&"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"facets1", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"OneVIgamma", ",", 
+          RowBox[{"Function", "[", 
+           RowBox[{"y", ",", 
+            RowBox[{"And", "@@", 
+             RowBox[{"Map", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"Or", "[", 
+                 RowBox[{
+                  RowBox[{"#", "[", "\"\<ContainsTestEdge\>\"", "]"}], ",", 
+                  RowBox[{
+                  "#", "[", "\"\<DisconnectsTestVertices\>\"", "]"}]}], "]"}],
+                 "&"}], ",", 
+               RowBox[{"Analyze1VIComponents", "[", 
+                RowBox[{
+                 RowBox[{"QuotientGraphByEdgeContractionWithEdgePos", "[", 
+                  RowBox[{"graph", ",", 
+                   RowBox[{"EdgeList", "[", 
+                    RowBox[{"y", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "]"}], ",", 
+                   RowBox[{"Range", "[", "nEdges", "]"}]}], "]"}], ",", 
+                 "whereMass", ",", 
+                 RowBox[{
+                  RowBox[{"VertexList", "[", "graph", "]"}], "[", 
+                  RowBox[{"[", 
+                   RowBox[{"1", ";;", "nParticles"}], "]"}], "]"}]}], "]"}]}],
+               "]"}]}]}], "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"facets2", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"OneVIGmodgamma", ",", 
+          RowBox[{"Function", "[", 
+           RowBox[{"y", ",", 
+            RowBox[{"And", "@@", 
+             RowBox[{"Map", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"Or", "[", 
+                 RowBox[{
+                  RowBox[{"#", "[", "\"\<ContainsTestEdge\>\"", "]"}], ",", 
+                  RowBox[{
+                  "#", "[", "\"\<DisconnectsTestVertices\>\"", "]"}]}], "]"}],
+                 "&"}], ",", 
+               RowBox[{"Analyze1VIComponents", "[", 
+                RowBox[{"y", ",", "whereMass", ",", 
+                 RowBox[{
+                  RowBox[{"VertexList", "[", "graph", "]"}], "[", 
+                  RowBox[{"[", 
+                   RowBox[{"1", ";;", "nParticles"}], "]"}], "]"}]}], "]"}]}],
+               "]"}]}]}], "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Normal", "[", 
+           RowBox[{"SparseArray", "[", 
+            RowBox[{
+             RowBox[{"Thread", "[", 
+              RowBox[{"#", "->", "1"}], "]"}], ",", "nEdges"}], "]"}], "]"}], 
+          "&"}], ",", 
+         RowBox[{"Union", "[", 
+          RowBox[{"Map", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "[", "\"\<EdgePos\>\"", "]"}], "&"}], ",", 
+            RowBox[{"Join", "[", 
+             RowBox[{"facets1", ",", "facets2"}], "]"}]}], "]"}], "]"}]}], 
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.9705883639407873`*^9, 3.970588385133731*^9}, {
+   3.970589669968173*^9, 3.970589686725584*^9}, {3.970589774968916*^9, 
+   3.970589776601058*^9}, {3.970589842882717*^9, 3.970589845521819*^9}, {
+   3.970590035977066*^9, 3.9705900369832487`*^9}, {3.970590376128921*^9, 
+   3.9705903968617496`*^9}, {3.970590934287868*^9, 3.9705909642509823`*^9}, {
+   3.970648862089279*^9, 3.970648965903652*^9}, {3.9706491201806*^9, 
+   3.970649204313241*^9}, {3.9706493236612988`*^9, 3.9706493810526876`*^9}, {
+   3.970649442019579*^9, 3.970649463788705*^9}, {3.970649559321089*^9, 
+   3.970649579889193*^9}, {3.970649963785071*^9, 3.970649975756662*^9}, {
+   3.9706500147055187`*^9, 3.970650024795299*^9}, {3.9706500559417963`*^9, 
+   3.9706500849855328`*^9}, {3.970650235040451*^9, 3.970650349867795*^9}, {
+   3.9706504221520643`*^9, 3.970650428734447*^9}, {3.970650626900383*^9, 
+   3.9706506385876102`*^9}, {3.970653394164592*^9, 3.9706533956496973`*^9}, {
+   3.970762009097794*^9, 3.970762018321422*^9}, {3.9707625764331284`*^9, 
+   3.970762627626441*^9}, 3.970762703641245*^9, 3.970762771682519*^9, {
+   3.970762833344068*^9, 3.9707628371194077`*^9}, {3.9707633988458357`*^9, 
+   3.9707634022827673`*^9}, {3.9707645049864883`*^9, 
+   3.9707645206693172`*^9}, {3.970764939465197*^9, 3.970764976423955*^9}, {
+   3.970765008599165*^9, 3.970765011708579*^9}, {3.970765094095312*^9, 
+   3.970765123498529*^9}},
+ CellLabel->
+  "In[443]:=",ExpressionUUID->"01c3bc32-dbf2-4bea-b0be-c313e7431c32"]
+},
+WindowSize->{1386, 761.25},
+WindowMargins->{{-2.25, Automatic}, {Automatic, -22.5}},
+FrontEndVersion->"14.2 for Linux x86 (64-bit) (March 16, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"0c8a4e07-9b64-43b8-a219-0d617f6133cf"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 33616, 794, 1953, "Input",ExpressionUUID->"01c3bc32-dbf2-4bea-b0be-c313e7431c32"]
+}
+]
+*)
+
