@@ -1,0 +1,35 @@
+
+import json
+
+# Define the file path
+file_path = '/content/verticesof5l.json'
+
+# Open the file and load the JSON data
+with open(file_path, 'r') as file:
+    loaded_data_array = json.load(file)
+
+print(f"Successfully re-loaded data from {file_path}.")
+print(f"Type of loaded data: {type(loaded_data_array)}")
+print(f"First 5 elements of loaded data: {loaded_data_array[:5]}")
+import numpy as np
+from scipy.spatial import ConvexHull
+import time
+
+# Convert loaded_data_array to a NumPy array and slice it
+vertices = np.array(loaded_data_array)[:, 2:]
+
+# Record the start time
+start_time = time.time()
+
+# Compute the convex hull with the 'QJ' option
+hull = ConvexHull(vertices)
+
+# Record the end time
+end_time = time.time()
+
+# Calculate and print the duration
+duration = end_time - start_time
+print(f"Convex Hull computation took: {duration:.4f} seconds.")
+print(f"Number of vertices in the convex hull: {len(hull.vertices)}")
+print(f"Number of facets in the convex hull: {len(hull.simplices)}")
+
