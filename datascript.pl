@@ -1,2 +1,0 @@
-use application "polytope";
-declare $pts = new Matrix([[1, 1, 0, 0, 0], [1, 0, 1, 0, 0], [1, 0, 0, 1, 0], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]]);
